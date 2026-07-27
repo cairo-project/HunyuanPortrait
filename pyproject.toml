@@ -32,7 +32,7 @@ hunyuanportrait = "generate_hunyuanportrait:main"
 py-modules = ["generate_hunyuanportrait", "inference"]
 
 [tool.setuptools.packages.find]
-include = ["src*"]
+include = ["src*", "config*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.yaml", "*.yml", "*.json"]
