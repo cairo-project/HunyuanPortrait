@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hunyuanportrait"
+version = "0.1.0"
+description = "HunyuanPortrait: video-driven implicit condition control for portrait animation (installable library)."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "See LICENSE / LICENSE_MODEL" }
+dependencies = [
+    "diffusers==0.29.0",
+    "moviepy==1.0.1",
+    "transformers",
+    "accelerate",
+    "omegaconf",
+    "opencv-python-headless",
+    "onnxruntime",
+    "onnxruntime-gpu",
+    "decord",
+    "scikit-image",
+    "scikit-video",
+    "einops",
+    "tqdm",
+]
+
+[project.scripts]
+hunyuanportrait = "generate_hunyuanportrait:main"
+
+[tool.setuptools]
+py-modules = ["generate_hunyuanportrait", "inference"]
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.yaml", "*.yml", "*.json"]
