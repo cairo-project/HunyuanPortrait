@@ -20,7 +20,8 @@ dependencies = [
     "onnxruntime-gpu",
     "decord",
     "scikit-image",
-    "scikit-video",
+    "imageio",
+    "imageio-ffmpeg",
     "einops",
     "tqdm",
 ]

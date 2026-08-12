@@ -7,7 +7,11 @@ import torchvision
 from einops import rearrange
 from PIL import Image
 from pathlib import Path
-from skvideo.io import ffprobe, FFmpegReader, FFmpegWriter
+try:
+    from skvideo.io import ffprobe, FFmpegReader, FFmpegWriter
+except Exception:
+    ffprobe = FFmpegReader = FFmpegWriter = None
+import imageio
 
 
 def xywh2xyxy(x):
@@ -284,11 +288,10 @@ def save_videos_from_pil(pil_images, path, fps=8):
     save_fmt = Path(path).suffix
     os.makedirs(os.path.dirname(path), exist_ok=True)
     if save_fmt == ".mp4":
-        video_cap = VideoUtils(output_video_path=path, fps=fps)
+        writer = imageio.get_writer(path, fps=fps, codec='libx264', quality=None, output_params=['-crf', '17', '-pix_fmt', 'yuv420p'])
         for pil_image in pil_images:
-            image_cv2 = np.array(pil_image)[:,:,[2,1,0]]
-            video_cap.writeframe(image_cv2)
-        video_cap.writeframe(None)
+            writer.append_data(np.array(pil_image))
+        writer.close()
 
     elif save_fmt == ".gif":
         pil_images[0].save(
